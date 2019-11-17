@@ -1,1 +1,1 @@
-# anime-sharing-system
+# Anime Sharing System
