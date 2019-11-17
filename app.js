@@ -8,6 +8,7 @@ var express;
 var expressValidator = require("express-validator");
 var expressSession = require("express-session");
 var passport = require("passport");
+var localStrategy = require("passport-local").Strategy;
 var bcrypt = require("bcryptjs");
 var multer = require("multer");
 // Handle File Uploads
@@ -53,6 +54,13 @@ app.use(
 // Passport - Authentification System
 app.use(passport.initialize());
 app.use(passport.expressSession());
+
+// Express messages middleware
+app.use(require("connect-flash")());
+app.use(function(req, res, next) {
+  res.locals.messages = require("express-messages")(req, res);
+  next();
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
