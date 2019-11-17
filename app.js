@@ -7,6 +7,15 @@ var logger = require("morgan");
 var express;
 var expressValidator = require("express-validator");
 var expressSession = require("express-session");
+var bcrypt = require("bcryptjs");
+var mongoose = require("mongoose");
+var mongoDB = "mongodb://localhost/anime_manager";
+mongoose.connect(mongoDB, { useNewUrlParser: true });
+//Get the default connection
+var db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -30,7 +39,7 @@ app.use("/users", usersRouter);
 
 // Middleware Installing
 app.use(
-  session({
+  expressSession({
     secret: "secret",
     resave: true,
     saveUninitialized: true
