@@ -6,7 +6,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var express;
 var expressValidator = require("express-validator");
-var expressSession = require("express-session");
+var session = require("express-session");
 var passport = require("passport");
 var localStrategy = require("passport-local").Strategy;
 var bcrypt = require("bcryptjs");
@@ -15,12 +15,12 @@ var multer = require("multer");
 var upload = multer({ dest: "./uploads" });
 var mongoose = require("mongoose");
 var mongoDB = "mongodb://localhost/anime_manager";
-mongoose.connect(mongoDB, { useNewUrlParser: true });
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 //Get the default connection
 var db = mongoose.connection;
 
 //Bind connection to error event (to get notification of connection errors)
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
+// db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -45,7 +45,7 @@ app.use("/users", usersRouter);
 
 // Middleware Installing
 app.use(
-  expressSession({
+  session({
     secret: "secret",
     resave: true,
     saveUninitialized: true
@@ -54,7 +54,7 @@ app.use(
 
 // Passport - Authentification System
 app.use(passport.initialize());
-app.use(passport.expressSession());
+app.use(passport.session());
 
 // Express messages middleware
 app.use(require("connect-flash")());
