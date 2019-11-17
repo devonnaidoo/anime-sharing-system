@@ -7,7 +7,11 @@ var logger = require("morgan");
 var express;
 var expressValidator = require("express-validator");
 var expressSession = require("express-session");
+var passport = require("passport");
 var bcrypt = require("bcryptjs");
+var multer = require("multer");
+// Handle File Uploads
+var upload = multer({ dest: "./uploads" });
 var mongoose = require("mongoose");
 var mongoDB = "mongodb://localhost/anime_manager";
 mongoose.connect(mongoDB, { useNewUrlParser: true });
@@ -45,6 +49,10 @@ app.use(
     saveUninitialized: true
   })
 );
+
+// Passport - Authentification System
+app.use(passport.initialize());
+app.use(passport.expressSession());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
