@@ -34,9 +34,10 @@ app.set("view engine", "ejs");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// Validator middleware
 app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
