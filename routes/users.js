@@ -22,17 +22,7 @@ router.get('/', function (req, res, next) {
 router.get('/register', function (req, res, next) {
   res.render('register', { title: 'Register' });
 });
-//Define a schema
-var Schema = mongoose.Schema;
 
-// Creating a schema properties
-var Users = new Schema({
-  name: String,
-  username: String,
-  email: String,
-  password: String,
-  profileImage: Buffer
-});
 
 // Creating a model
 var user = mongoose.model('User', Users);
