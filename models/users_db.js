@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 
 // Creating a schema properties
 var users = new Schema({
-    _id = Schema.Types.ObjectId,
+    _id: Schema.Types.ObjectId,
     name: String,
     username: String,
     email: String,
