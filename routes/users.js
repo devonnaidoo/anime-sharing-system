@@ -23,22 +23,27 @@ router.get('/register', function (req, res, next) {
   res.render('register', { title: 'Register' });
 });
 
-router.post('/register', [
-  check('name').isEmpty().withMessage('Name Required'),
-  check('username').isEmpty().withMessage('Name Username Required'),
-  check('email').isEmail().normalizeEmail(),
-  check('password').isEmpty().isLength({ min: 5 }),
-  check('password2').isEmpty().matches('password')
-]
-  , upload.single("profileImage"), function (req, res, next) {
+router.post('/register', upload.single("profileImage"), function (req, res, next) {
 
-    // Getting values
-    var name = req.body.name;
-    var username = req.body.username;
-    var email = req.body.email;
-    var password = req.body.password;
-    var password2 = req.body.password2;
-    var profileImage = req.body.profileImage;
+  req.checkBody('name', 'Name Required').notEmpty();
+  req.checkBody('username', 'Username Required').notEmpty();
+  req.checkBody('email', 'Email Required').isEmail();
+  req.checkBody('password', 'Passwords must match').equals(req.body.password2);
+
+  // Getting values
+  var name = req.body.name;
+  var username = req.body.username;
+  var email = req.body.email;
+  var password = req.body.password;
+  var password2 = req.body.password2;
+  var profileImage = req.body.profileImage;
+
+  // Finds the validation errors in this request and wraps them in an object with handy functions
+  let errors = req.validationErrors();
+  if (errors) {
+    console.log(errors);
+  }
+  else {
     bcrypt.hash(password, salt, function (err, hash) {
       if (err) {
         throw err
@@ -51,27 +56,19 @@ router.post('/register', [
           password: hash,
           profileImage: profileImage
         });
-        // Finds the validation errors in this request and wraps them in an object with handy functions
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-          return res.status(422).json({ errors: errors.array() });
-        }
-        else {
-          user_new.save()
-            .then(doc => {
-              res.location("/users/register");
-              res.redirect("/")
-            })
-            .catch(err => {
-              console.error(err)
-            })
-        }
+
+        user_new.save()
+          .then(doc => {
+            res.location("/users/register");
+            res.redirect("/")
+          })
+          .catch(err => {
+            console.error(err)
+          })
       }
     })
-
-
-
-  });
+  }
+});
 
 
 
