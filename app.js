@@ -11,13 +11,11 @@ var passport = require("passport");
 var localStrategy = require("passport-local").Strategy;
 var bcrypt = require("bcryptjs");
 var multer = require("multer");
-// Handle File Uploads
-var upload = multer({ dest: "./uploads" });
+var upload = multer({ dest: "./uploads" }); // Handle File Uploads
 var mongoose = require("mongoose");
 var mongoDB = "mongodb://localhost/anime_manager";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
-//Get the default connection
-var db = mongoose.connection;
+var db = mongoose.connection; //Get the default connection
 
 
 var indexRouter = require("./routes/index");
@@ -55,6 +53,7 @@ app.use(
 
 // Express messages middleware - has to implemented before router
 app.use(flash())
+
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
