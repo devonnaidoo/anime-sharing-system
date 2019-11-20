@@ -42,7 +42,12 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
   // Finds the validation errors in this request and wraps them in an object with handy functions
   let errors = req.validationErrors();
   if (errors) {
-    req.flash('error', errors.msg);
+    var errorsMessages = [];
+    for (var obj in errors) {
+      errorsMessages.push(errors[obj].msg)
+    }
+    console.log(errorsMessages);
+    req.flash('error', errorsMessages);
     res.redirect("/users/register");
     console.log(errors);
   }
