@@ -1,7 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var multer = require("multer");
-var upload = multer({ dest: "./uploads" }); // Handle File Uploads
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './upload')
+  },
+  filename: function (req, file, cb) {
+    db(null, file.filename + "-" + Date.now())
+  }
+})
+var upload = multer({ storage: storage }); // Handle File Uploads
 var bcrypt = require('bcryptjs');
 var salt = 10; //Numbers of randomly generated String of characters
 // var flash = require("connect-flash");
@@ -38,6 +47,7 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
   var password = req.body.password;
   var password2 = req.body.password2;
   var profileImage = req.body.profileImage;
+  console.log(req.file.filename)
 
   // Finds the validation errors in this request and wraps them in an object with handy functions
   let errors = req.validationErrors();
