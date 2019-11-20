@@ -37,46 +37,50 @@ router.get('/register', function (req, res, next) {
 
 router.post('/register', upload.single("profileImage"), function (req, res, next) {
 
+  // Validation for form
   req.checkBody('name', 'Name Required').notEmpty();
   req.checkBody('username', 'Username Required').notEmpty();
   req.checkBody('email', 'Email Required').isEmail();
   req.checkBody('password', 'Passwords must match').equals(req.body.password2);
 
-  // Getting values
+  // Getting values from input
   var name = req.body.name;
   var username = req.body.username;
   var email = req.body.email;
   var password = req.body.password;
   var password2 = req.body.password2;
-  var profileImage = req.body.profileImage;
-  console.log(req.file.filename)
+  var profileImage = req.file.path;
 
   // Finds the validation errors in this request and wraps them in an object with handy functions
   let errors = req.validationErrors();
   if (errors) {
+    // Looping the error messages and getting the msg key from the object and storing it in errorMessages array
     var errorsMessages = [];
     for (var obj in errors) {
       errorsMessages.push(errors[obj].msg)
     }
-    console.log(errorsMessages);
+
     req.flash('error', errorsMessages);
     res.redirect("/users/register");
-    console.log(errors);
+
   }
   else {
+    // Encrypting Passwords
     bcrypt.hash(password, salt, function (err, hash) {
       if (err) {
-        throw err
+        throw err;
       } else {
+        // Creating a new user instance
         var user_new = new User({
           _id: new mongoose.Types.ObjectId(),
           name: name,
           username: username,
           email: email,
           password: hash,
-          profileImage: req.file.path
+          profileImage: profileImage
         });
 
+        // Saves successfull registered user to DB
         user_new.save()
           .then(doc => {
             req.flash('success', 'User successfully added!');
@@ -90,42 +94,5 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
     })
   }
 });
-
-
-
-// router.post('/register',
-//   // [
-//   //   check('name').isEmpty().withMessage('Name Required'),
-//   //   check('username').isEmpty().withMessage('Name Username Required'),
-//   // ], upload.single("profileImage"), function (req, res, next) 
-//   {
-//     // Finds the validation errors in this request and wraps them in an object with handy functions
-//     // const errors = validationResult(req);
-//     // if (!errors.isEmpty()) {
-//     //   return res.status(422).json({ errors: errors.array() })
-//     // }
-//     // Getting values
-//     // var name = req.body.name;
-//     // var username = req.body.username;
-//     // var email = req.body.email;
-//     // var password = req.body.password;
-//     // var password2 = req.body.password2;
-//     // var profileImage = req.body.profileImage;
-
-//     // Checking for file 
-//     // if (req.file) {
-//     //   console.log('Works');
-//     // } else {
-//     //   console.log('Not Working');
-//     // }
-
-//     // Push to database
-//     // user.save(function (err) {
-//     //   if (err) return handleError(err);
-
-//     // });
-
-
-//   });
 
 module.exports = router;
