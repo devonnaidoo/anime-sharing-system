@@ -4,6 +4,7 @@ var multer = require("multer");
 var upload = multer({ dest: "./uploads" }); // Handle File Uploads
 var bcrypt = require('bcryptjs');
 var salt = 10; //Numbers of randomly generated String of characters
+var flash = require("connect-flash");
 var { check, validationResult } = require("express-validator/check");
 var User = require("../models/users_db");
 var mongoose = require("mongoose");
@@ -41,6 +42,7 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
   // Finds the validation errors in this request and wraps them in an object with handy functions
   let errors = req.validationErrors();
   if (errors) {
+    req.flash('danger', errors);
     console.log(errors);
   }
   else {
@@ -59,7 +61,8 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
 
         user_new.save()
           .then(doc => {
-            res.location("/users/register");
+            req.flash('success', 'User successfully added!')
+            res.location("/");
             res.redirect("/")
           })
           .catch(err => {

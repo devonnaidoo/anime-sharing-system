@@ -4,9 +4,9 @@ var bodyParser = require("body-parser");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var express;
 var expressValidator = require("express-validator");
 var session = require("express-session");
+var flash = require("connect-flash");
 var passport = require("passport");
 var localStrategy = require("passport-local").Strategy;
 var bcrypt = require("bcryptjs");
@@ -49,21 +49,21 @@ app.use("/users", usersRouter);
 app.use(
   session({
     secret: "secret",
-    resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    resave: false
   })
 );
+
+// Express messages middleware
+app.use(flash());
+app.use(function (req, res, next) {
+  res.locals.messages = require("express-messages");
+  next();
+});
 
 // Passport - Authentification System
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Express messages middleware
-app.use(require("connect-flash")());
-app.use(function (req, res, next) {
-  res.locals.messages = require("express-messages")(req, res);
-  next();
-});
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
