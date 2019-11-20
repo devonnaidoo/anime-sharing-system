@@ -1,12 +1,12 @@
 var createError = require("http-errors");
 var express = require("express");
-var bodyParser = require("body-parser");
 var path = require("path");
 var cookieParser = require("cookie-parser");
+var bodyParser = require("body-parser");
 var logger = require("morgan");
 var expressValidator = require("express-validator");
+var flash = require('express-flash');
 var session = require("express-session");
-var flash = require("connect-flash");
 var passport = require("passport");
 var localStrategy = require("passport-local").Strategy;
 var bcrypt = require("bcryptjs");
@@ -42,24 +42,29 @@ app.use(expressValidator());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
-
 // Middleware Installing
 app.use(
   session({
-    secret: "secret",
+    secret: "keyboard cat",
     saveUninitialized: true,
-    resave: false
+    resave: false,
+    cookie: { maxAge: 60000 }
   })
 );
 
 // Express messages middleware
-app.use(flash());
-app.use(function (req, res, next) {
-  res.locals.messages = require("express-messages");
-  next();
-});
+app.use(flash())
+
+// app.use(function (req, res, next) {
+//   res.locals.success = req.flash('success');
+//   res.locals.errors = req.flash('error');
+//   next();
+// });
+
+app.use("/", indexRouter);
+app.use("/users", usersRouter);
+
+
 
 // Passport - Authentification System
 app.use(passport.initialize());
