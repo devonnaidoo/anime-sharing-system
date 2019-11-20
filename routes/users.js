@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var path = require('path');
-var fs = require('fs')
 var multer = require("multer");
-
+// Multer setup and configuration
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './uploads')
@@ -15,8 +13,8 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage }); // Handle File Uploads
 var bcrypt = require('bcryptjs');
 var salt = 10; //Numbers of randomly generated String of characters
-// var flash = require("connect-flash");
-var { check, validationResult } = require("express-validator/check");
+
+// Database setup
 var User = require("../models/users_db");
 var mongoose = require("mongoose");
 var mongoDB = "mongodb://localhost/anime_manager";
@@ -31,10 +29,13 @@ router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
 
+// Registeration route
 router.get('/register', function (req, res, next) {
   res.render('register', { title: 'Register' });
 });
 
+
+// Form registeration
 router.post('/register', upload.single("profileImage"), function (req, res, next) {
 
   // Validation for form
