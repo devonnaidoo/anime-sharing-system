@@ -19,8 +19,6 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 //Get the default connection
 var db = mongoose.connection;
 
-//Bind connection to error event (to get notification of connection errors)
-// db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -55,19 +53,11 @@ app.use(
   })
 );
 
-// Express messages middleware
+// Express messages middleware - has to implemented before router
 app.use(flash())
-
-// app.use(function (req, res, next) {
-//   res.locals.success = req.flash('success');
-//   res.locals.errors = req.flash('error');
-//   next();
-// });
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
-
-
 
 // Passport - Authentification System
 app.use(passport.initialize());
