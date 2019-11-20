@@ -10,7 +10,7 @@ var users = new Schema({
     username: String,
     email: String,
     password: String,
-    profileImage: Buffer
+    profileImage: String
 });
 
 

@@ -1,13 +1,14 @@
 var express = require('express');
 var router = express.Router();
+var path = require('path');
 var multer = require("multer");
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './upload')
+    cb(null, '/uploads')
   },
   filename: function (req, file, cb) {
-    db(null, file.filename + "-" + Date.now())
+    cb(null, file.filename + "-" + Date.now() + path.extname(file.originalname))
   }
 })
 var upload = multer({ storage: storage }); // Handle File Uploads
@@ -72,7 +73,7 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
           username: username,
           email: email,
           password: hash,
-          profileImage: profileImage
+          profileImage: req.file.path
         });
 
         user_new.save()
