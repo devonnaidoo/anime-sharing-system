@@ -39,7 +39,6 @@
       </div>
     </div>
   </nav>
-
-  <% for(var msg in messages.error) { %>
-  <%= messages.error[msg] %>
+  <% for(var key in messages.error) { %>
+  <p><%= messages.error[key] %> </p>
   <% } %>
