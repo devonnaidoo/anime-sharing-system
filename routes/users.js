@@ -15,7 +15,7 @@ var upload = multer({
   storage: storage, fileFilter: function (req, file, callback) {
     var ext = path.extname(file.originalname);
     if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-      return callback(new Error('Only images are allowed'))
+      req.flash('error', 'Only images are allowed with the following extentions: png, jpg ,gif, jpeg');
     }
     callback(null, true)
   },
