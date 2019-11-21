@@ -1,16 +1,28 @@
 var express = require('express');
 var router = express.Router();
 var multer = require("multer");
+var path = require('path');
 // Multer setup and configuration
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './uploads')
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + " - " + file.originalname)
+    cb(null, Date.now() + "-" + file.originalname)
   }
 })
-var upload = multer({ storage: storage }); // Handle File Uploads
+var upload = multer({
+  storage: storage, fileFilter: function (req, file, callback) {
+    var ext = path.extname(file.originalname);
+    if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+      return callback(new Error('Only images are allowed'))
+    }
+    callback(null, true)
+  },
+  limits: {
+    fileSize: 1024 * 1024
+  }
+}); // Handle File Uploads
 var bcrypt = require('bcryptjs');
 var salt = 10; //Numbers of randomly generated String of characters
 
