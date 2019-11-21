@@ -41,5 +41,7 @@
   </nav>
 
   <% for(var key in messages.error) { %>
-  <p><%= messages.error[key] %> </p>
+  <div class="alert alert-primary" role="alert">
+    <%= messages.error[key] %>
+  </div>
   <% } %>

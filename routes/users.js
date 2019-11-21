@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var multer = require("multer");
-var path = require('path');
+
 // Multer setup and configuration
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -13,7 +13,7 @@ var storage = multer.diskStorage({
 })
 var upload = multer({
   storage: storage, fileFilter: function (req, file, callback) {
-    var ext = path.extname(file.originalname);
+    var ext = require('path').extname(file.originalname);
     if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
       req.flash('error', 'Only images are allowed with the following extentions: png, jpg ,gif, jpeg');
     }
@@ -62,7 +62,12 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
   var email = req.body.email;
   var password = req.body.password;
   var password2 = req.body.password2;
-  var profileImage = req.file.path;
+  if (req.file) {
+    var profileImage = req.file.path;
+  } else {
+    var profileImage = "./uploads/no-image.jpg";
+  }
+
 
   // Finds the validation errors in this request and wraps them in an object with handy functions
   let errors = req.validationErrors();
