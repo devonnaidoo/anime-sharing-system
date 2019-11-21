@@ -51,6 +51,10 @@ router.get('/login', function (req, res, next) {
 
 // Authenticate login
 router.post('/login', function (req, res, next) {
+  // Get form data
+  var email = req.body.email;
+  var password = req.body.password;
+
   passport.use(new LocalStrategy(
     function (username, password, done) {
       User.findOne({ username: username }, function (err, user) {
