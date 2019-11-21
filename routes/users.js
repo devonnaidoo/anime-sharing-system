@@ -41,6 +41,11 @@ router.get('/', function (req, res, next) {
   res.send('respond with a resource');
 });
 
+// Login route
+router.get('/login', function (req, res, next) {
+  res.render('login', { title: 'Login' });
+});
+
 // Registeration route
 router.get('/register', function (req, res, next) {
   res.render('register', { title: 'Register' });
