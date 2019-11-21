@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var multer = require("multer");
 
+var passport = require('passport'); //Login Auth
+var LocalStrategy = require('passport-local').Strategy;
+
 // Multer setup and configuration
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
