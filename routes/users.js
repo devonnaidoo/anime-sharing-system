@@ -49,6 +49,11 @@ router.get('/login', function (req, res, next) {
   res.render('login', { title: 'Login' });
 });
 
+// Authenticate login
+
+
+
+
 // Registeration route
 router.get('/register', function (req, res, next) {
   res.render('register', { title: 'Register' });
