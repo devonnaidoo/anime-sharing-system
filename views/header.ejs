@@ -40,8 +40,15 @@
     </div>
   </nav>
 
+  <% if (messages.error) { %>
   <% for(var key in messages.error) { %>
-  <div class="alert alert-primary" role="alert">
+  <div class="alert alert-danger" role="alert">
     <%= messages.error[key] %>
+  </div>
+  <% } %>
+  <% } %>
+  <% if (messages.success) { %>
+  <div class="alert alert-success" role="alert">
+    <%= messages.success %>
   </div>
   <% } %>
