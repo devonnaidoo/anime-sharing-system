@@ -35,7 +35,6 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
-
 /* GET users listing. */
 router.get('/', function (req, res, next) {
   res.send('respond with a resource');
@@ -53,7 +52,6 @@ router.get('/logout', function (req, res, next) {
   res.redirect('/users/register');
 });
 
-
 // Authenticate login
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
@@ -63,13 +61,10 @@ router.post('/login', (req, res, next) => {
   })(req, res, next)
 });
 
-
-
 // Registeration route
 router.get('/register', function (req, res, next) {
   res.render('register', { title: 'Register' });
 });
-
 
 // Form registeration
 router.post('/register', upload.single("profileImage"), function (req, res, next) {
@@ -92,7 +87,6 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
     var profileImage = "./uploads/no-image.jpg";
   }
 
-
   // Finds the validation errors in this request and wraps them in an object with handy functions
   let errors = req.validationErrors();
   if (errors) {
@@ -101,10 +95,8 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
     for (var obj in errors) {
       errorsMessages.push(errors[obj].msg)
     }
-
     req.flash('error', errorsMessages);
     res.redirect("/users/register");
-
   }
   else {
     // Encrypting Passwords
@@ -113,25 +105,32 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
         throw err;
       } else {
         // Creating a new user instance
-        var user_new = new User({
-          _id: new mongoose.Types.ObjectId(),
-          name: name,
-          username: username,
-          email: email,
-          password: hash,
-          profileImage: profileImage
-        });
-
-        // Saves successfull registered user to DB
-        user_new.save()
-          .then(doc => {
-            req.flash('success', 'User successfully added!');
-            res.location("/");
-            res.redirect("/");
-          })
-          .catch(err => {
-            console.error(err)
-          })
+        User.findOne({ username: username }, (err, users) => {
+          if (users) {
+            req.flash('error', 'User already exists');
+            res.redirect('/users/register');
+            res.end();
+          } else {
+            var user_new = new User({
+              _id: new mongoose.Types.ObjectId(),
+              name: name,
+              username: username,
+              email: email,
+              password: hash,
+              profileImage: profileImage
+            });
+            // Saves successfull registered user to DB
+            user_new.save()
+              .then(doc => {
+                req.flash('success', 'User successfully added!');
+                res.location("/");
+                res.redirect("/");
+              })
+              .catch(err => {
+                console.error(err)
+              })
+          }
+        })
       }
     })
   }

@@ -9,7 +9,7 @@ var users = new Schema({
     name: String,
     username: String,
     email: String,
-    password: String,
+    password: { type: String, min: 6 },
     profileImage: String
 });
 
