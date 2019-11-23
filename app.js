@@ -8,7 +8,7 @@ var expressValidator = require("express-validator");
 var flash = require('express-flash');
 var session = require("express-session");
 var passport = require("passport");
-var localStrategy = require("passport-local").Strategy;
+var LocalStrategy = require("passport-local").Strategy;
 var bcrypt = require("bcryptjs");
 var multer = require("multer");
 var upload = multer({ dest: "./uploads" }); // Handle File Uploads
@@ -53,14 +53,45 @@ app.use(
 
 // Express messages middleware - has to implemented before router
 app.use(flash())
+// Passport - Authentification System
+app.use(passport.initialize());
+app.use(passport.session());
 
+passport.use(new LocalStrategy(
+  function (username, password, done) {
+    // Get form data
+    var username = req.body.username;
+    var password = req.body.password;
+
+    User.findOne({ username: username }, function (err, user) {
+      if (err) {
+        return done(err);
+      }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
-// Passport - Authentification System
-app.use(passport.initialize());
-app.use(passport.session());
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
