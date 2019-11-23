@@ -109,7 +109,6 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
           if (users) {
             req.flash('error', 'User already exists');
             res.redirect('/users/register');
-            res.end();
           } else {
             var user_new = new User({
               _id: new mongoose.Types.ObjectId(),

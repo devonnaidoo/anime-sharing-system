@@ -6,10 +6,10 @@ var Schema = mongoose.Schema;
 // Creating a schema properties
 var users = new Schema({
     _id: Schema.Types.ObjectId,
-    name: String,
-    username: String,
-    email: String,
-    password: { type: String, min: 6 },
+    name: { type: String, required: true },
+    username: { type: String, required: true },
+    email: { type: String, lowercase: true, required: true, },
+    password: { type: String, minlength: 6 },
     profileImage: String
 });
 
