@@ -7,7 +7,7 @@ router.get('/', function (req, res, next) {
   res.render('index', { title: 'Home' });
 });
 
-router.get('/dashboard', function (req, res, next) {
-  res.render('dashboard', { title: 'Dashboard' });
+router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
+  res.render('dashboard', { title: 'Dashboard', username: req.user.name });
 });
 module.exports = router;
