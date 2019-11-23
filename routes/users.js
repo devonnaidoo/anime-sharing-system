@@ -52,7 +52,7 @@ router.get('/login', function (req, res, next) {
 // Login route
 router.get('/logout', function (req, res, next) {
   req.logout();
-  res.redirect('/');
+  res.redirect('/users/register');
 });
 
 
