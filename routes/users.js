@@ -73,7 +73,8 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
   req.checkBody('name', 'Name Required').notEmpty();
   req.checkBody('username', 'Username Required').notEmpty();
   req.checkBody('email', 'Email Required').isEmail();
-  req.checkBody('password', 'Passwords must match').equals(req.body.password2);
+  req.checkBody('password', 'Must be more than 6 characters').isLength({ min: 6 })
+  req.checkBody('password2', 'Passwords must match').equals(req.body.password);
 
   // Getting values from input
   var name = req.body.name;
