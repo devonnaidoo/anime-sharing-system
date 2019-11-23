@@ -51,15 +51,12 @@ router.get('/login', function (req, res, next) {
 
 
 // Authenticate login
-router.post('/login', passport.authenticate('local', { failureRedirect: '/users/login' }), function (req, res, next) {
-  // passport.authenticate('local', {
-  //   successRedirect: '/',
-  //   failureRedirect: '/users/login',
-  //   failureFlash: true
-  // })
-
-
-
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/users/login',
+    failureFlash: true
+  })(req, res, next)
 });
 
 

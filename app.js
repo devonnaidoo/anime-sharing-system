@@ -8,18 +8,22 @@ var expressValidator = require("express-validator");
 var flash = require('express-flash');
 var session = require("express-session");
 var passport = require("passport");
-
 var multer = require("multer");
+require("./config/passport")(passport);
 
+// Routes
+var indexRouter = require("./routes/index");
+var usersRouter = require("./routes/users");
+
+// Express initiate
+var app = express();
+
+// Database config
 var mongoose = require("mongoose");
 var mongoDB = "mongodb://localhost/anime_manager";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection; //Get the default connection
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-
-var app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -46,12 +50,12 @@ app.use(
   })
 );
 
-// Express messages middleware - has to implemented before router
-app.use(flash());
-
 // Passport - Authentification System
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Express messages middleware - has to implemented before router
+app.use(flash());
 
 // Routes
 app.use("/", indexRouter);
