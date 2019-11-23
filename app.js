@@ -21,8 +21,6 @@ var app = express();
 var mongoose = require("mongoose");
 var mongoDB = "mongodb://localhost/anime_manager";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
-var db = mongoose.connection; //Get the default connection
-
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
