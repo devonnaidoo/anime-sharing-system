@@ -8,7 +8,6 @@ var expressValidator = require("express-validator");
 var flash = require('express-flash');
 var session = require("express-session");
 var passport = require("passport");
-var multer = require("multer");
 require("./config/passport")(passport);
 
 // Routes
