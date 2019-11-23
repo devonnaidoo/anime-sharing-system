@@ -49,6 +49,12 @@ router.get('/login', function (req, res, next) {
   res.render('login', { title: 'Login' });
 });
 
+// Login route
+router.get('/logout', function (req, res, next) {
+  req.logout();
+  res.redirect('/');
+});
+
 
 // Authenticate login
 router.post('/login', (req, res, next) => {
