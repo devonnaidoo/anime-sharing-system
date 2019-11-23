@@ -52,6 +52,7 @@ router.get('/login', function (req, res, next) {
 // Login route
 router.get('/logout', function (req, res, next) {
   req.logout();
+  req.flash('success', "You have logged out")
   res.redirect('/users/register');
 });
 
