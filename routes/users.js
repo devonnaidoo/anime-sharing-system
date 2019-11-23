@@ -107,10 +107,23 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
       } else {
         // Creating a new user instance
         User.findOne({ username: username }, (err, users) => {
+          // if (users[0].username.length) {
+          //   req.flash('error', 'User already exists');
+          //   res.redirect('/users/register');
+          // } else if (users.username) {
+          //   req.flash('error', 'Email already exists');
+          //   res.redirect('/users/register');
+          // } 
+          if (err) {
+            throw err;
+          }
           if (users) {
+            console.log("Users" + users);
             req.flash('error', 'User already exists');
             res.redirect('/users/register');
-          } else {
+          }
+          else {
+            console.log(users);
             var user_new = new User({
               _id: new mongoose.Types.ObjectId(),
               name: name,
