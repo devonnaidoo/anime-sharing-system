@@ -16,6 +16,7 @@ var mongoose = require("mongoose");
 var mongoDB = "mongodb://localhost/anime_manager";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 var db = mongoose.connection; //Get the default connection
+var User = require("models/users_db");
 
 
 var indexRouter = require("./routes/index");
@@ -60,8 +61,8 @@ app.use(passport.session());
 passport.use(new LocalStrategy(
   function (username, password, done) {
     // Get form data
-    var username = req.body.username;
-    var password = req.body.password;
+    var username = username;
+    var password = password;
 
     User.findOne({ username: username }, function (err, user) {
       if (err) {
