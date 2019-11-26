@@ -1,13 +1,14 @@
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
-var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
+var session = require("express-session");
 var logger = require("morgan");
 var expressValidator = require("express-validator");
 var flash = require('express-flash');
-var session = require("express-session");
 var passport = require("passport");
+const MongoStore = require('connect-mongo')(session);
 require("./config/passport")(passport);
 
 // Routes
@@ -40,10 +41,14 @@ app.use(express.static(path.join(__dirname, "public")));
 // Express session middleware
 app.use(
   session({
-    secret: "keyboard cat",
+    secret: "userAuth",
     saveUninitialized: true,
     resave: false,
-    cookie: { maxAge: 60000 }
+    cookie: { secure: false, maxAge: 60000 },
+    store: new MongoStore({
+      url: "mongodb://localhost/anime_manager",
+      ttl: 14 * 24 * 60 * 60  // = 14 days. Default
+    })
   })
 );
 
@@ -68,7 +73,8 @@ app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
-
+  // User Access Control
+  res.locals.users = req.isAuthenticated();
   // render the error page
   res.status(err.status || 500);
   res.render("error");

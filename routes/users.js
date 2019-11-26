@@ -42,6 +42,7 @@ router.get('/', function (req, res, next) {
 
 // Login route
 router.get('/login', function (req, res, next) {
+  console.log(req.query)
   res.render('login', { title: 'Login' });
 });
 
@@ -57,8 +58,14 @@ router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/dashboard',
     failureRedirect: '/users/login',
+    session: true,
     failureFlash: true
-  })(req, res, next)
+  })(req, res, next), function (req, res) {
+    // Explicitly save the session before redirecting!
+    req.session.save(() => {
+      res.redirect('/dashboard');
+    })
+  }
 });
 
 // Registeration route
@@ -107,13 +114,6 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
       } else {
         // Creating a new user instance
         User.findOne({ username: username }, (err, users) => {
-          // if (users[0].username.length) {
-          //   req.flash('error', 'User already exists');
-          //   res.redirect('/users/register');
-          // } else if (users.username) {
-          //   req.flash('error', 'Email already exists');
-          //   res.redirect('/users/register');
-          // } 
           if (err) {
             throw err;
           }
@@ -136,8 +136,8 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
             user_new.save()
               .then(doc => {
                 req.flash('success', 'User successfully added!');
-                res.location("/");
-                res.redirect("/");
+                res.location("/users/login");
+                res.redirect("/users/login");
               })
               .catch(err => {
                 console.error(err)
