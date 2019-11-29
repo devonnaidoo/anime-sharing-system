@@ -11,7 +11,6 @@ var flash = require('express-flash');
 var passport = require("passport");
 const MongoStore = require('connect-mongo')(session);
 require("./config/passport")(passport);
-const { ensureAuthenticated } = require('./config/auth');
 // Routes
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
