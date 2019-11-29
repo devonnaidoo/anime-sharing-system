@@ -42,7 +42,6 @@ router.get('/', function (req, res, next) {
 
 // Login route
 router.get('/login', function (req, res, next) {
-  console.log(req.query)
   res.render('login', { title: 'Login' });
 });
 
@@ -66,6 +65,7 @@ router.post('/login', (req, res, next) => {
       res.redirect('/dashboard');
     })
   }
+
 });
 
 // Registeration route
@@ -148,5 +148,6 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
     })
   }
 });
+
 
 module.exports = router;

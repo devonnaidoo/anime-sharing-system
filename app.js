@@ -10,7 +10,7 @@ var flash = require('express-flash');
 var passport = require("passport");
 const MongoStore = require('connect-mongo')(session);
 require("./config/passport")(passport);
-
+const { ensureAuthenticated } = require('./config/auth');
 // Routes
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -22,6 +22,9 @@ var app = express();
 var mongoose = require("mongoose");
 var mongoDB = "mongodb://localhost/anime_manager";
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+//Get the default connection
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -44,10 +47,10 @@ app.use(
     secret: "userAuth",
     saveUninitialized: true,
     resave: false,
-    cookie: { secure: false, maxAge: 60000 },
+    cookie: { maxAge: 60000 },
     store: new MongoStore({
       url: "mongodb://localhost/anime_manager",
-      ttl: 14 * 24 * 60 * 60  // = 14 days. Default
+      ttl: 2 * 24 * 60 * 60,  // = 14 days. Default
     })
   })
 );
@@ -68,13 +71,16 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 
+
+
+
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
   // User Access Control
-  res.locals.users = req.isAuthenticated();
+  app.locals.usersAuth = req.isAuthenticated();
+  res.locals.error = req.app.get("env") === "development" ? err : {};
   // render the error page
   res.status(err.status || 500);
   res.render("error");
