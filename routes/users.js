@@ -42,7 +42,7 @@ router.get('/', function (req, res, next) {
 
 // Login route
 router.get('/login', function (req, res, next) {
-  res.render('login', { title: 'Login' });
+  res.render('login', { title: 'Login', auth: req.isAuthenticated() });
 });
 
 // Login route
@@ -70,7 +70,7 @@ router.post('/login', (req, res, next) => {
 
 // Registeration route
 router.get('/register', function (req, res, next) {
-  res.render('register', { title: 'Register' });
+  res.render('register', { title: 'Register', auth: req.isAuthenticated() });
 });
 
 // Form registeration

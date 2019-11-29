@@ -1,18 +1,18 @@
-<% if (username == "") { %>
+<% if (auth == false) { %>
 <% include header %>
 <% }%>
 
-<% if (username != null) { %>
+<% if (auth == true) { %>
 <% include header-logged-in %>
 <% }%>
 
 
 <div class="container text-center">
     <h1 class="p-3">Home</h1>
-    <% if(isLoggedIn === true){%>
+    <% if(auth === true){%>
     <h3 class="p-1">Is Logged In</h1>
         <% } %>
-        <% if(isLoggedIn === false) { %>
+        <% if(auth === false) { %>
         <h3 class="p-1">Is Not Logged In</h1>
             <% } %>
 </div>
