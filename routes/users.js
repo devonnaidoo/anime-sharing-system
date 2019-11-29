@@ -29,7 +29,7 @@ var salt = 10; //Numbers of randomly generated String of characters
 // Database setup
 var User = require("../models/users_db");
 var mongoose = require("mongoose");
-var mongoDB = "mongodb://localhost/anime_manager";
+var mongoDB = process.env.DB_URL;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 //Get the default connection
 var db = mongoose.connection;

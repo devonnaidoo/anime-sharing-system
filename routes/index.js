@@ -3,7 +3,7 @@ var router = express.Router();
 const { ensureAuthenticated } = require('../config/auth');
 const url = require('url');
 var mongoose = require("mongoose");
-var mongoDB = "mongodb://localhost/anime_manager";
+var mongoDB = process.env.DB_URL;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 //Get the default connection
 var db = mongoose.connection;
