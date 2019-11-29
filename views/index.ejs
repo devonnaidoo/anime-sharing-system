@@ -1,4 +1,11 @@
+<% if (username == "") { %>
 <% include header %>
+<% }%>
+
+<% if (username != null) { %>
+<% include header-logged-in %>
+<% }%>
+
 
 <div class="container text-center">
     <h1 class="p-3">Home</h1>

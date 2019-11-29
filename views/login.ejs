@@ -1,4 +1,11 @@
+<% if (username == "") { %>
 <% include header %>
+<% }%>
+
+<% if (username != null) { %>
+<% include header-logged-in %>
+<% }%>
+
 
 <div class="container p-5">
     <form method="post" action="/users/login">
