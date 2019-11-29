@@ -1,3 +1,4 @@
+require('dotenv').config()
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -20,7 +21,7 @@ var app = express();
 
 // Database config
 var mongoose = require("mongoose");
-var mongoDB = "mongodb://localhost/anime_manager";
+var mongoDB = process.env.DB_URL;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 //Get the default connection
 var db = mongoose.connection;
@@ -44,13 +45,13 @@ app.use(express.static(path.join(__dirname, "public")));
 // Express session middleware
 app.use(
   session({
-    secret: "userAuth",
+    secret: process.env.SECRET,
     saveUninitialized: true,
     resave: false,
     cookie: { maxAge: 60000 },
     store: new MongoStore({
-      url: "mongodb://localhost/anime_manager",
-      ttl: 2 * 24 * 60 * 60,  // = 14 days. Default
+      url: process.env.DB_URL,
+      ttl: 2 * 24 * 60 * 60,  // 2 days
     })
   })
 );
