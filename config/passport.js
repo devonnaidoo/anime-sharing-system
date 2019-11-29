@@ -3,11 +3,10 @@ const mongoose = require("mongoose");
 const bcryt = require('bcryptjs');
 const User = require("../models/users_db");
 
-
 module.exports = function (passport) {
     passport.use(new LocalStrategy({ username: 'username' },
         function (username, password, done) {
-
+            // Finding user in database
             User.findOne({ username: username }, function (err, users) {
                 // Error Handler
                 if (err) {
@@ -34,10 +33,12 @@ module.exports = function (passport) {
         }
     ));
 
+    // Cookies identifies the session for each subsequent request (request following another)
+    // Passport will serialize and deserialize user instances to and from the session.
     passport.serializeUser(function (users, done) {
         done(null, users.id);
     });
-
+    // When subsequent requests are received, this ID is used to find the user, which will be restored to req.user
     passport.deserializeUser(function (id, done) {
         User.findById(id, function (err, users) {
             done(err, users);
