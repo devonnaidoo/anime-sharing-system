@@ -11,13 +11,8 @@ db.on('error', console.error.bind(console, 'connection error:'))
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  console.log(req.isAuthenticated());
-
   res.render('index', { title: 'Home', isLoggedIn: req.isAuthenticated() });
 });
-router.post('/header', function (req, res, next) {
-  res.send({ isLoggedIn: req.isAuthenticated() })
-})
 
 router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
   console.log(req.isAuthenticated());

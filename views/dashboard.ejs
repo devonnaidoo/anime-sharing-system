@@ -1,3 +1,9 @@
+<% if (username == "") { %>
 <% include header %>
+<% }%>
+
+<% if (username != null) { %>
+<% include header-logged-in %>
+<% }%>
 
 <h1>Welcome to <%= username %></h1>
