@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const { ensureAuthenticated } = require('../config/auth');
 var mongoose = require("mongoose");
 var mongoDB = process.env.DB_URL;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });

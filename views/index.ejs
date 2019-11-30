@@ -1,13 +1,15 @@
 <% include partials/header %>
 
 <div class="container text-center">
-    <p>Is user authenticated? <%= isAuthenticated %></p>
+
+    <% if (userInfo) { %>
+    <ul class="list-group">
+        <li class="list-group-item"><%= userInfo._id %></li>
+        <li class="list-group-item"><%= userInfo.username %></li>
+        <li class="list-group-item"><%= userInfo.email %></li>
+    </ul>
+    <% } %>
 
     <h1 class="p-3">Home</h1>
-    <% if(auth === true){%>
-    <h3 class="p-1">Is Logged In</h1>
-        <% } %>
-        <% if(auth === false) { %>
-        <h3 class="p-1">Is Not Logged In</h1>
-            <% } %>
+
 </div>
