@@ -1,11 +1,4 @@
-<% if (auth == false) { %>
-<% include header %>
-<% }%>
-
-<% if (auth == true) { %>
-<% include header-logged-in %>
-<% }%>
-
+<% include partials/header %>
 
 <div class="container">
     <form method="post" action="/users/register" enctype="multipart/form-data" class="p-5">

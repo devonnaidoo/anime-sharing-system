@@ -1,13 +1,8 @@
-<% if (auth == false) { %>
-<% include header %>
-<% }%>
-
-<% if (auth == true) { %>
-<% include header-logged-in %>
-<% }%>
-
+<% include partials/header %>
 
 <div class="container text-center">
+    <p>Is user authenticated? <%= isAuthenticated %></p>
+
     <h1 class="p-3">Home</h1>
     <% if(auth === true){%>
     <h3 class="p-1">Is Logged In</h1>

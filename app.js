@@ -50,7 +50,7 @@ app.use(
     cookie: { maxAge: 60000 },
     store: new MongoStore({
       url: process.env.DB_URL,
-      ttl: 2 * 24 * 60 * 60,  // 2 days
+      ttl: 24 * 24 * 60 * 60,  // 2 days
     })
   })
 );
@@ -61,6 +61,11 @@ app.use(passport.session());
 
 // Express messages middleware - has to implemented before router
 app.use(flash());
+
+app.use(function (req, res, next) {
+  res.locals.isAuthenticated = req.isAuthenticated();
+  next();
+});
 
 // Routes
 app.use("/", indexRouter);

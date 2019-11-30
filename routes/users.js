@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var multer = require("multer");
+var session = require("express-session");
+const { ensureAuthenticated } = require('../config/auth');
 var passport = require('passport'); //Login Auth
 // Multer setup and configuration
 var storage = multer.diskStorage({
@@ -28,6 +30,7 @@ var salt = 10; //Numbers of randomly generated String of characters
 
 // Database setup
 var User = require("../models/users_db");
+// var Anime = require("../models/users_db");
 var mongoose = require("mongoose");
 var mongoDB = process.env.DB_URL;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -42,29 +45,33 @@ router.get('/', function (req, res, next) {
 
 // Login route
 router.get('/login', function (req, res, next) {
+  User.findById({})
   res.render('login', { title: 'Login', auth: req.isAuthenticated() });
 });
 
 // Login route
 router.get('/logout', function (req, res, next) {
   req.logout();
-  req.flash('success', "You have logged out")
+  req.flash('success', "You have logged out");
+  req.session.destroy();
   res.redirect('/users/register');
 });
 
 // Authenticate login
 router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
-    successRedirect: '/dashboard',
+    successRedirect: '/users/dashboard',
     failureRedirect: '/users/login',
     session: true,
     failureFlash: true
   })(req, res, next), function (req, res) {
     // Explicitly save the session before redirecting!
+    // You can use req.user in dashboard
     req.session.save(() => {
-      res.redirect('/dashboard');
+      res.redirect('/users/dashboard');
     })
   }
+
 
 });
 
@@ -130,8 +137,10 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
               username: username,
               email: email,
               password: hash,
-              profileImage: profileImage
+              profileImage: profileImage,
+              // anime: []
             });
+
             // Saves successfull registered user to DB
             user_new.save()
               .then(doc => {
@@ -149,5 +158,9 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
   }
 });
 
+
+router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
+  res.render('dashboard', { title: 'Dashboard', username: req.user.username });
+});
 
 module.exports = router;

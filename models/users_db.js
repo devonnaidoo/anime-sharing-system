@@ -4,7 +4,6 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var animeSchema = new Schema({
-    _id: Schema.Types.ObjectId,
     title: String,
     source: String
 })
@@ -17,11 +16,11 @@ var users = new Schema({
     email: { type: String, lowercase: true, required: true, },
     password: { type: String, minlength: 6 },
     profileImage: String,
-    anime: [animeSchema]
+    // anime: [animeSchema]
 });
 
 
 
 
 module.exports = mongoose.model('User', users);
-module.exports = mongoose.model('Anime', animeSchema);
+// module.exports = mongoose.model('Anime', animeSchema);

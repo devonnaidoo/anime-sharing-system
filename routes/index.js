@@ -13,8 +13,6 @@ router.get('/', function (req, res, next) {
   res.render('index', { title: 'Home', auth: req.isAuthenticated() });
 });
 
-router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
-  res.render('dashboard', { title: 'Dashboard', username: req.user.name });
-});
+
 
 module.exports = router;
