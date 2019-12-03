@@ -4,9 +4,11 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var animeSchema = new Schema({
-    title: String,
-    source: String
-})
+    _id: Schema.Types.ObjectId,
+    title: { type: String, required: false },
+    source: { type: String, required: false },
+    user: [{ type: Schema.Types.ObjectId, ref: "User" }]
+});
 
 // Creating a schema properties
 var users = new Schema({
@@ -16,11 +18,11 @@ var users = new Schema({
     email: { type: String, lowercase: true, required: true, },
     password: { type: String, minlength: 6 },
     profileImage: String,
-    // anime: [animeSchema]
+    anime: [{ type: Schema.Types.ObjectId, ref: "Anime" }]
 });
 
 
 
 
+module.exports = mongoose.model('Anime', animeSchema);
 module.exports = mongoose.model('User', users);
-// module.exports = mongoose.model('Anime', animeSchema);

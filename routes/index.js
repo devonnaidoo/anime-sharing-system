@@ -12,6 +12,4 @@ router.get('/', function (req, res, next) {
   res.render('index', { title: 'Home', auth: req.isAuthenticated() });
 });
 
-
-
 module.exports = router;

@@ -11,6 +11,7 @@ var flash = require('express-flash');
 var passport = require("passport");
 const MongoStore = require('connect-mongo')(session);
 require("./config/passport")(passport);
+
 // Routes
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -76,8 +77,6 @@ app.use("/users", usersRouter);
 app.use(function (req, res, next) {
   next(createError(404));
 });
-
-
 
 // error handler
 app.use(function (err, req, res, next) {

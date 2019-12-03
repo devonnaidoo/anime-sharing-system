@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var multer = require("multer");
-var session = require("express-session");
 const { ensureAuthenticated } = require('../config/auth');
 var passport = require('passport'); //Login Auth
 // Multer setup and configuration
@@ -30,6 +29,7 @@ var salt = 10; //Numbers of randomly generated String of characters
 
 // Database setup
 var User = require("../models/users_db");
+var Anime = require("../models/users_db");
 // var Anime = require("../models/users_db");
 var mongoose = require("mongoose");
 var mongoDB = process.env.DB_URL;
@@ -137,8 +137,7 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
               username: username,
               email: email,
               password: hash,
-              profileImage: profileImage,
-              // anime: []
+              profileImage: profileImage
             });
 
             // Saves successfull registered user to DB
@@ -158,9 +157,71 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
   }
 });
 
-
+// User Dashboard
 router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
   res.render('dashboard', { title: 'Dashboard', username: req.user.username });
+});
+
+// Add new anime
+// Registeration route
+router.get('/dashboard/add/:id', function (req, res, next) {
+  res.render('add_anime', { title: 'Add' });
+});
+
+// Form registeration
+router.post('/dashboard/add/:id', function (req, res, next) {
+
+  // Validation for form
+  req.checkBody('title', 'Title Required').notEmpty();
+  req.checkBody('source', 'Source Required').notEmpty();
+
+
+  // Getting values from input
+  var title = req.body.title;
+  var source = req.body.source;
+
+
+  // Finds the validation errors in this request and wraps them in an object with handy functions
+  let errors = req.validationErrors();
+  if (errors) {
+    // Looping the error messages and getting the msg key from the object and storing it in errorMessages array
+    var errorsMessages = [];
+    for (var obj in errors) {
+      errorsMessages.push(errors[obj].msg)
+    }
+    req.flash('error', errorsMessages);
+    res.redirect("/users/dashboard");
+  }
+  else {
+    var user_anime = {
+      _id: new mongoose.Types.ObjectId(),
+      title: title,
+      source: source
+    };
+    User.findOne({ _id: req.params.id }, function (err, user) {
+      if (err) {
+        return next(err);
+      }
+      if (!user) {
+        res.redirect('/');
+      }
+      user.anime.push({
+        _id: new mongoose.Types.ObjectId(),
+        title: "title",
+        source: " source"
+      })
+
+      user.save(function (err) {
+        if (err) {
+          return next(err);
+        } else {
+          req.flash('success', 'Anime Successfully Created!');
+          res.location("/users/dashboard");
+          res.redirect("/users/dashboard");
+        }
+      });
+    })
+  }
 });
 
 module.exports = router;
