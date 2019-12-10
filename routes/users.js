@@ -170,11 +170,17 @@ router.post('/dashboard/add/:id', function (req, res, next) {
 
   // Validation for form
   req.checkBody('title', 'Title Required').notEmpty();
+  req.checkBody('genre', 'Genre Required').notEmpty();
   req.checkBody('source', 'Source Required').notEmpty();
-
+  if (req.file) {
+    var profileImage = req.file.path;
+  } else {
+    var profileImage = "./uploads/no-image.jpg";
+  }
 
   // Getting values from input
   var title = req.body.title;
+  var genre = req.body.genre;
   var source = req.body.source;
 
 
@@ -203,6 +209,7 @@ router.post('/dashboard/add/:id', function (req, res, next) {
       }
       user.anime.push({
         title: title,
+        genre: genre,
         source: source
       })
 
