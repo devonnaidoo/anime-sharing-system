@@ -187,7 +187,7 @@ router.post('/dashboard/add/:id', function (req, res, next) {
       errorsMessages.push(errors[obj].msg)
     }
     req.flash('error', errorsMessages);
-    res.redirect("/users/dashboard");
+    res.redirect("/users/dashboard/add/" + req.params.id);
   }
   else {
     // var user_anime = {
