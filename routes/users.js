@@ -156,7 +156,7 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
 
 // User Dashboard
 router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
-  res.render('dashboard', { title: 'Dashboard', username: req.user.username });
+  res.render('dashboard', { title: 'Dashboard', username: req.user.username, anime: req.user.anime });
 });
 
 // Add new anime

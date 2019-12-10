@@ -1,4 +1,9 @@
 <% include partials/header %>
 
-<h1>Welcome to <%= username %></h1>
+<h1>Welcome back <span class="text-uppercase"> <%= username %> </span></h1>
 <a href="dashboard/add/<%= userInfo._id %>">Add Anime</a>
+
+<h2>Your Anime</h2>
+<% for(var key in anime) { %>
+<p><%= anime[key].title %></p>
+<% } %>
