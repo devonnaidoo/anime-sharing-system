@@ -6,6 +6,8 @@ var Schema = mongoose.Schema;
 var animeSchema = new Schema({
     title: { type: String },
     source: { type: String },
+    genre: { type: String },
+    animeImage: { type: String }
 });
 
 // Creating a schema properties
