@@ -29,7 +29,6 @@ var salt = 10; //Numbers of randomly generated String of characters
 
 // Database setup
 var User = require("../models/users_db");
-var Anime = require("../models/users_db");
 // var Anime = require("../models/users_db");
 var mongoose = require("mongoose");
 var mongoDB = process.env.DB_URL;
@@ -45,7 +44,6 @@ router.get('/', function (req, res, next) {
 
 // Login route
 router.get('/login', function (req, res, next) {
-  User.findById({})
   res.render('login', { title: 'Login', auth: req.isAuthenticated() });
 });
 
@@ -71,8 +69,6 @@ router.post('/login', (req, res, next) => {
       res.redirect('/users/dashboard');
     })
   }
-
-
 });
 
 // Registeration route
@@ -137,7 +133,8 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
               username: username,
               email: email,
               password: hash,
-              profileImage: profileImage
+              profileImage: profileImage,
+              anime: []
             });
 
             // Saves successfull registered user to DB
@@ -193,11 +190,10 @@ router.post('/dashboard/add/:id', function (req, res, next) {
     res.redirect("/users/dashboard");
   }
   else {
-    var user_anime = {
-      _id: new mongoose.Types.ObjectId(),
-      title: title,
-      source: source
-    };
+    // var user_anime = {
+    //   title: title,
+    //   source: source
+    // };
     User.findOne({ _id: req.params.id }, function (err, user) {
       if (err) {
         return next(err);
@@ -206,9 +202,8 @@ router.post('/dashboard/add/:id', function (req, res, next) {
         res.redirect('/');
       }
       user.anime.push({
-        _id: new mongoose.Types.ObjectId(),
-        title: "title",
-        source: " source"
+        title: title,
+        source: source
       })
 
       user.save(function (err) {
