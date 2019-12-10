@@ -166,23 +166,23 @@ router.get('/dashboard/add/:id', function (req, res, next) {
 });
 
 // Form registeration
-router.post('/dashboard/add/:id', function (req, res, next) {
+router.post('/dashboard/add/:id', upload.single("animeImage"), function (req, res, next) {
 
   // Validation for form
   req.checkBody('title', 'Title Required').notEmpty();
   req.checkBody('genre', 'Genre Required').notEmpty();
   req.checkBody('source', 'Source Required').notEmpty();
   if (req.file) {
-    var profileImage = req.file.path;
+    var animeImage = req.file.path;
   } else {
-    var profileImage = "./uploads/no-image.jpg";
+    var animeImage = "./uploads/no-image.jpg";
   }
 
   // Getting values from input
   var title = req.body.title;
   var genre = req.body.genre;
   var source = req.body.source;
-
+  var animeImage = animeImage
 
   // Finds the validation errors in this request and wraps them in an object with handy functions
   let errors = req.validationErrors();
@@ -210,7 +210,8 @@ router.post('/dashboard/add/:id', function (req, res, next) {
       user.anime.push({
         title: title,
         genre: genre,
-        source: source
+        source: source,
+        animeImage: animeImage
       })
 
       user.save(function (err) {
