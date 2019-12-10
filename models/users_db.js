@@ -4,10 +4,8 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var animeSchema = new Schema({
-    _id: Schema.Types.ObjectId,
-    title: { type: String, required: false },
-    source: { type: String, required: false },
-    user: [{ type: Schema.Types.ObjectId, ref: "User" }]
+    title: { type: String },
+    source: { type: String, },
 });
 
 // Creating a schema properties
@@ -18,11 +16,8 @@ var users = new Schema({
     email: { type: String, lowercase: true, required: true, },
     password: { type: String, minlength: 6 },
     profileImage: String,
-    anime: [{ type: Schema.Types.ObjectId, ref: "Anime" }]
+    anime: [animeSchema]
 });
 
 
-
-
-module.exports = mongoose.model('Anime', animeSchema);
 module.exports = mongoose.model('User', users);
