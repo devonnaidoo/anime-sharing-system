@@ -2,7 +2,7 @@
 
 
 <div class="container p-5">
-    <form method="post" action="/users/dashboard/add/<%= userInfo._id %>">
+    <form method="post" action="/users/dashboard/add/<%= userInfo._id %>" enctype="multipart/form-data">
         <div class="form-group">
             <label for="title">Title</label>
             <input name="title" type="text" class="form-control" placeholder="Enter anime title">

@@ -5,8 +5,12 @@
 
 <h2>Your Anime</h2>
 <% for(var key in anime) { %>
-<p><%= anime[key].title %></p>
-<p><%= anime[key].genre %></p>
-<p><%= anime[key].source %></p>
-<p><%= anime[key].profileImage %></p>
+<div class="card">
+    <img src="<%= anime[key].profileImage %>" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title"><%= anime[key].title %></h5>
+        <p class="card-text"><%= anime[key].genre %></p>
+        <a href="<%= anime[key].source %>" class="btn btn-primary">Go to </a>
+    </div>
+</div>
 <% } %>
