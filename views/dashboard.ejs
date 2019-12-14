@@ -33,7 +33,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="/users/dashboard/edit/<%= userInfo._id %>"
+                        <form method="post" action="/users/dashboard/edit/<%= anime[key]._id %>"
                             enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="title">Title</label>
@@ -60,7 +60,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <a href="/users/dashboard/edit/:id" type="button" class="btn btn-primary">Edit</a>
+                        <!-- <a href="/users/dashboard/edit/:id" type="button" class="btn btn-primary">Edit</a> -->
                     </div>
                 </div>
             </div>

@@ -223,9 +223,9 @@ router.post('/dashboard/add/:id', upload.single("animeImage"), function (req, re
 });
 
 // Edit anime route
-router.get('/dashboard/edit/:id', function (req, res, next) {
-  res.render('edit_anime', { title: 'Edit' });
-});
+// router.get('/dashboard/edit/:id', function (req, res, next) {
+//   res.render('edit_anime', { title: 'Edit' });
+// });
 
 // Edit anime from database subdocuments
 router.get("/dashboard/edit/:id", upload.single("animeImage"), function (req, res, next) {
