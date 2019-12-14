@@ -228,7 +228,7 @@ router.post('/dashboard/add/:id', upload.single("animeImage"), function (req, re
 // });
 
 // Edit anime from database subdocuments
-router.get("/dashboard/edit/:id", upload.single("animeImage"), function (req, res, next) {
+router.post("/dashboard/edit/:id", upload.single("animeImage"), function (req, res, next) {
   User.findOne({ _id: req.user._id }).exec(function (err, results) {
     // Find array item by _id subdocs
     var animeToEdit = results.anime.find(
