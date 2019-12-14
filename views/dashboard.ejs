@@ -1,17 +1,22 @@
 <% include partials/header %>
 
-<h1>Welcome back <span class="text-uppercase"> <%= username %> </span></h1>
-<a href="dashboard/add/<%= userInfo._id %>">Add Anime</a>
+<div class="container">
+    <h1>Welcome back <span class="text-uppercase"> <%= username %> </span></h1>
+    <a href="dashboard/add/<%= userInfo._id %>">Add Anime</a>
 
-<h2>Your Anime</h2>
-<% for(var key in anime) { %>
-<div class="card">
-    <%= anime[key].animeImage %>
-    <img src="/<%= anime[key].animeImage %>" class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title"><%= anime[key].title %></h5>
-        <p class="card-text"><%= anime[key].genre %></p>
-        <a href="<%= anime[key].source %>" class="btn btn-primary">Go to </a>
+    <h2>Your Anime</h2>
+    <div class="row">
+        <% for(var key in anime) { %>
+        <div class="card w-25 m-5">
+            <img src="/<%= anime[key].animeImage %>" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title"><%= anime[key].title %></h5>
+                <p class="card-text"><%= anime[key].genre %></p>
+                <a href="<%= anime[key].source %>" class="btn btn-primary">Go to </a>
+            </div>
+        </div>
+        <% } %>
     </div>
+
+
 </div>
-<% } %>

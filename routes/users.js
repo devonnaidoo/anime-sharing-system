@@ -223,4 +223,17 @@ router.post('/dashboard/add/:id', upload.single("animeImage"), function (req, re
   }
 });
 
+// Delete anime from database subdocuments
+router.get("/dashboard/delete/:id", function (req, res, next) {
+  User.findOne({ _id: req.user._id }).exec(function (err, results) {
+    var animeToDelete = results.stories.filter(({ _id }) => _id.toString() !== req.params.id);
+    results.anime = animeToDelete;
+    results.save().then(function () {
+      req.flash('success', 'Anime Successfully Deleted!');
+      res.location("/users/dashboard");
+      res.redirect("/users/dashboard");
+    });
+  })
+})
+
 module.exports = router;
