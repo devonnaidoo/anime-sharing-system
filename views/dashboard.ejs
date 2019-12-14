@@ -14,9 +14,53 @@
                 <p class="card-text"><%= anime[key].genre %></p>
                 <a href="<%= anime[key].source %>" class="btn btn-primary">Go to </a>
                 <a href="/users/dashboard/delete/<%= anime[key]._id %>" class="btn btn-danger">Delete </a>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Edit
+                </button>
             </div>
         </div>
         <% } %>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="post" action="/users/dashboard/add/<%= userInfo._id %>"
+                            enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input name="title" type="text" class="form-control" placeholder="Enter anime title">
+                            </div>
+                            <div class="form-group">
+                                <label for="genre">Genre</label>
+                                <input name="genre" type="text" class="form-control" placeholder="Enter anime genre">
+                            </div>
+                            <div class="form-group">
+                                <label for="source">Source</label>
+                                <input name="source" type="text" class="form-control" placeholder="Enter anime source">
+                            </div>
+                            <div class="form-group">
+                                <label for="animeImage">Add a anime image</label>
+                                <input name="animeImage" type="file" class="form-control-file">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a href="/dashboard/edit/:id" type="button" class="btn btn-primary">Edit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 
