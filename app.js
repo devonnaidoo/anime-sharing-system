@@ -48,10 +48,11 @@ app.use(
     secret: process.env.SECRET,
     saveUninitialized: true,
     resave: false,
-    cookie: { maxAge: 60000 },
+    cookie: { maxAge: 60000 }, //Added extra zero
     store: new MongoStore({
       url: process.env.DB_URL,
-      ttl: 24 * 24 * 60 * 60,  // 2 days
+      touchAfter: 24 * 24 * 60 * 60,
+      ttl: 24 * 24 * 60 * 60  // 2 days
     })
   })
 );
