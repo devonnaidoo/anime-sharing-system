@@ -13,6 +13,7 @@
                 <h5 class="card-title"><%= anime[key].title %></h5>
                 <p class="card-text"><%= anime[key].genre %></p>
                 <a href="<%= anime[key].source %>" class="btn btn-primary">Go to </a>
+                <a href="/delete/<%= anime[key]._id %>" class="btn btn-danger">Delete </a>
             </div>
         </div>
         <% } %>
