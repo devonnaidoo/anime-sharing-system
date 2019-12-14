@@ -33,30 +33,34 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="post" action="/users/dashboard/add/<%= userInfo._id %>"
+                        <form method="post" action="/users/dashboard/edit/<%= userInfo._id %>"
                             enctype="multipart/form-data">
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input name="title" type="text" class="form-control" placeholder="Enter anime title">
+                                <input name="title" type="text" value="<%= anime[key].title %>" class="form-control"
+                                    placeholder="Enter anime title">
                             </div>
                             <div class="form-group">
                                 <label for="genre">Genre</label>
-                                <input name="genre" type="text" class="form-control" placeholder="Enter anime genre">
+                                <input name="genre" type="text" value="<%= anime[key].genre %>" class="form-control"
+                                    placeholder="Enter anime genre">
                             </div>
                             <div class="form-group">
                                 <label for="source">Source</label>
-                                <input name="source" type="text" class="form-control" placeholder="Enter anime source">
+                                <input name="source" type="text" value="<%= anime[key].source %>" class="form-control"
+                                    placeholder="Enter anime source">
                             </div>
                             <div class="form-group">
-                                <label for="animeImage">Add a anime image</label>
-                                <input name="animeImage" type="file" class="form-control-file">
+                                <label for="animeImage">Replace anime image</label>
+                                <input name="animeImage" value="<%= anime[key].animeImage %>" type="file"
+                                    class="form-control-file">
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <a href="/dashboard/edit/:id" type="button" class="btn btn-primary">Edit</a>
+                        <a href="/users/dashboard/edit/:id" type="button" class="btn btn-primary">Edit</a>
                     </div>
                 </div>
             </div>

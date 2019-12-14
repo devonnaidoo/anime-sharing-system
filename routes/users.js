@@ -230,6 +230,19 @@ router.get("/dashboard/edit/:id", function (req, res, next) {
       // _id.toString. Mongo stores _id as ObjectId so in order to compare inputted _id to database it needs to be converted to a string
       ({ _id }) => _id.toString() === req.params.id
     )
+
+    // Edit items
+    animeToEdit.title = req.body.title;
+    animeToEdit.genre = req.body.genre;
+    animeToEdit.source = req.body.source;
+    animeToEdit.animeImage = req.body.animeImage;
+
+    // Save changes to database
+    results.save().then(function () {
+      req.flash('success', 'Anime Successfully Deleted!');
+      res.location("/users/dashboard");
+      res.redirect("/users/dashboard");
+    });
   })
 })
 
