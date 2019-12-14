@@ -240,7 +240,8 @@ router.post("/dashboard/edit/:id", upload.single("animeImage"), function (req, r
     animeToEdit.title = req.body.title;
     animeToEdit.genre = req.body.genre;
     animeToEdit.source = req.body.source;
-    animeToEdit.animeImage = req.body.animeImage;
+    animeToEdit.animeImage = req.file ? req.file.path : results.animeImage;
+    console.log(animeToEdit.animeImage);
 
     // Save changes to database
     results.save().then(function () {
