@@ -7,7 +7,7 @@
 <% for(var key in anime) { %>
 <div class="card">
     <%= anime[key].animeImage %>
-    <img src="/uploads/1576344355406-488490145-39717.jpg" class="card-img-top" alt="...">
+    <img src="/<%= anime[key].animeImage %>" class="card-img-top" alt="...">
     <div class="card-body">
         <h5 class="card-title"><%= anime[key].title %></h5>
         <p class="card-text"><%= anime[key].genre %></p>

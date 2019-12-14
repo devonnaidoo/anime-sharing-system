@@ -175,7 +175,7 @@ router.post('/dashboard/add/:id', upload.single("animeImage"), function (req, re
   if (req.file) {
     var animeImage = req.file.path;
   } else {
-    var animeImage = "./uploads/no-image.jpg";
+    var animeImage = "./uploads/default-image.jpg";
   }
 
   // Getting values from input
@@ -196,10 +196,6 @@ router.post('/dashboard/add/:id', upload.single("animeImage"), function (req, re
     res.redirect("/users/dashboard/add/" + req.params.id);
   }
   else {
-    // var user_anime = {
-    //   title: title,
-    //   source: source
-    // };
     User.findOne({ _id: req.params.id }, function (err, user) {
       if (err) {
         return next(err);
