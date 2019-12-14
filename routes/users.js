@@ -222,6 +222,16 @@ router.post('/dashboard/add/:id', upload.single("animeImage"), function (req, re
     })
   }
 });
+// Edit anime from database subdocuments
+router.get("/dashboard/edit/:id", function (req, res, next) {
+  User.findOne({ _id: req.user._id }).exec(function (err, results) {
+    // Find array item by _id subdocs
+    var animeToEdit = results.anime.find(
+      // _id.toString. Mongo stores _id as ObjectId so in order to compare inputted _id to database it needs to be converted to a string
+      ({ _id }) => _id.toString() === req.params.id
+    )
+  })
+})
 
 // Delete anime from database subdocuments
 router.get("/dashboard/delete/:id", function (req, res, next) {
