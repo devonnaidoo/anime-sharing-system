@@ -159,13 +159,12 @@ router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
   res.render('dashboard', { title: 'Dashboard', username: req.user.username, anime: req.user.anime });
 });
 
-// Add new anime
-// Registeration route
+// Add new anime route
 router.get('/dashboard/add/:id', function (req, res, next) {
   res.render('add_anime', { title: 'Add' });
 });
 
-// Form registeration
+// Add anime 
 router.post('/dashboard/add/:id', upload.single("animeImage"), function (req, res, next) {
 
   // Validation for form
@@ -222,8 +221,14 @@ router.post('/dashboard/add/:id', upload.single("animeImage"), function (req, re
     })
   }
 });
+
+// Edit anime route
+router.get('/dashboard/edit/:id', function (req, res, next) {
+  res.render('edit_anime', { title: 'Edit' });
+});
+
 // Edit anime from database subdocuments
-router.get("/dashboard/edit/:id", function (req, res, next) {
+router.get("/dashboard/edit/:id", upload.single("animeImage"), function (req, res, next) {
   User.findOne({ _id: req.user._id }).exec(function (err, results) {
     // Find array item by _id subdocs
     var animeToEdit = results.anime.find(
