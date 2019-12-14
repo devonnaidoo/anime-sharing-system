@@ -32,7 +32,7 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 // Middleware config
-app.use('/uploads', express.static('upload')); // public folder
+app.use('/uploads', express.static('uploads')); // public folder
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
