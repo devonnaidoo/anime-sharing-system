@@ -10,7 +10,7 @@
                 </li>
                 <li class="list-group-item"><a href="#"> Edit Profile </a></li>
                 <li class="list-group-item"><a href="#"> Display Anime </a></li>
-                <li class="list-group-item"><a href="#">Add Anime </a></li>
+                <li class="list-group-item"><a href="dashboard/add/<%= userInfo._id %>">Add Anime </a></li>
                 <li class="list-group-item"><a href="#">Delete Account </a></li>
             </ul>
         </div>
@@ -46,26 +46,9 @@
 </div>
 
 <div class="container">
-    <h1>Welcome back <span class="text-uppercase"> <%= username %> </span></h1>
-    <a href="dashboard/add/<%= userInfo._id %>">Add Anime</a>
 
-    <h2>Your Anime</h2>
+
     <div class="row">
-        <% for(var key in anime) { %>
-        <div class="card w-25 m-5">
-            <img src="/<%= anime[key].animeImage %>" class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title"><%= anime[key].title %></h5>
-                <p class="card-text"><%= anime[key].genre %></p>
-                <a href="<%= anime[key].source %>" class="btn btn-primary">Go to </a>
-                <a href="/users/dashboard/delete/<%= anime[key]._id %>" class="btn btn-danger">Delete </a>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Edit
-                </button>
-            </div>
-        </div>
-        <% } %>
         <!-- Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
