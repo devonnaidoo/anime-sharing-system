@@ -1,29 +1,18 @@
 <% include partials/header %>
 
-<div id="wrapper">
-    <!-- Sidebar -->
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </div>
-
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
-                    <a href="#" class="btn" id="menu-toggle"><span
-                            class="glyphicon glyphicon-menu-hamburger"></span></a>
-                    <h1 class="text-center">Bootstrap Sidebar</h1>
-                    <h2 class="small text-center">Second Header</h2>
-                    <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium
-                        perferendis maiores velit ad id delectus nisi eligendi doloremque officia necessitatibus,
-                        repellendus alias omnis, natus nam voluptates dolor vel minus ab?</p>
-                </div>
-            </div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2 bg-dark side-menu">
+            <ul class="list-group side-nav-items bg-dark">
+                <li class="list-group-item userProfile">
+                    <img src="<%= userInfo.profileImage %>" class="rounded mx-auto d-block text-center" alt="..." />
+                    <h5><%= userInfo.username %></h5>
+                </li>
+                <li class="list-group-item"><a href="#"> Edit Profile </a></li>
+                <li class="list-group-item"><a href="#"> Display Anime </a></li>
+                <li class="list-group-item"><a href="#">Add Anime </a></li>
+                <li class="list-group-item"><a href="#">Delete Account </a></li>
+            </ul>
         </div>
     </div>
 </div>
