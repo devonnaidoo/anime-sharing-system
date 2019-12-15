@@ -14,6 +14,34 @@
                 <li class="list-group-item"><a href="#">Delete Account </a></li>
             </ul>
         </div>
+        <div class="col-lg-10">
+            <div class="container anime-list">
+                <h1 class="title text-center">
+                    Your Anime
+                </h1>
+                <div class="row">
+                    <% for(var key in anime) { %>
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <img src="/<%= anime[key].animeImage %>" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= anime[key].title %></h5>
+                                <p class="card-text"><%= anime[key].genre %></p>
+                                <a href="<%= anime[key].source %>" class="btn btn-primary">Go to </a>
+                                <a href="/users/dashboard/delete/<%= anime[key]._id %>" class="btn btn-danger">Delete
+                                </a>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#exampleModal">
+                                    Edit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
