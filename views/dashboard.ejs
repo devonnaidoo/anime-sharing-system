@@ -8,7 +8,9 @@
                     <img src="/<%= userInfo.profileImage %>" class="mx-auto" alt="..." />
                     <h5><%= userInfo.username %></h5>
                 </li>
-                <li class="list-group-item"><a href="#"> Edit Profile </a></li>
+                <li class="list-group-item"><a href="./dashboard/profile/edit/<%= userInfo._id %>"> Edit Profile
+                    </a>
+                </li>
                 <li class="list-group-item"><a href="#"> Display Anime </a></li>
                 <li class="list-group-item"><a href="dashboard/add/<%= userInfo._id %>">Add Anime </a></li>
                 <li class="list-group-item"><a href="#">Delete Account </a></li>
