@@ -1,5 +1,6 @@
 .side-nav-items {
-  position: fixed !important;
+  /* position: fixed !important; */
+  color: #ffffff;
   margin: 50px 0;
 }
 .side-nav-items li {
@@ -16,4 +17,8 @@
 .userProfile {
   text-align: center !important;
   margin: 0 auto;
+}
+.userProfile img {
+  border-radius: 50%;
+  width: 100%;
 }

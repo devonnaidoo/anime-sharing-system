@@ -16,7 +16,7 @@ var upload = multer({
   storage: storage, fileFilter: function (req, file, callback) {
     var ext = require('path').extname(file.originalname);
     if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-      req.flash('error', 'Only images are allowed with the following extentions: png, jpg ,gif, jpeg');
+      req.flash('error', 'Only images with the following extentions are allowed : png, jpg ,gif, jpeg');
     }
     callback(null, true)
   },
@@ -158,7 +158,10 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
 router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
   res.render('dashboard', { title: 'Dashboard', username: req.user.username, anime: req.user.anime });
 });
+/********************** User Profile CRUD functionality *********************/
 
+
+/********************** Anime CRUD functionality *********************/
 // Add new anime route
 router.get('/dashboard/add/:id', function (req, res, next) {
   res.render('add_anime', { title: 'Add' });
@@ -241,7 +244,6 @@ router.post("/dashboard/edit/:id", upload.single("animeImage"), function (req, r
     } else {
       animeToEdit.animeImage = animeToEdit.animeImage;
     }
-
 
     // Save changes to database
     results.save().then(function () {
