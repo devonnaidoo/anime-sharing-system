@@ -190,7 +190,15 @@ router.post("/dashboard/profile/edit/:id", upload.single("profileImage"), functi
     res.redirect("/users/dashboard");
   })
 })
-
+// Delete User
+router.get('/dashboard/profile/remove/:id', function (req, res, next) {
+  User.findByIdAndRemove(req.params.id, function (err) {
+    if (err) return next(err);
+    req.flash('success', 'Account Successfully Removed!');
+    res.location("/users/register");
+    res.redirect("/users/register");
+  })
+});
 
 /********************** Anime CRUD functionality *********************/
 // Add new anime route
