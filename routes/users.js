@@ -173,7 +173,7 @@ router.post("/dashboard/profile/edit/:id", upload.single("profileImage"), functi
   if (req.file) {
     var profileImage = req.file.path;
   } else {
-    var profileImage = "./uploads/no-image.jpg";
+    var profileImage = req.user.profileImage;
   }
 
   User.findByIdAndUpdate(req.params.id, {
@@ -183,13 +183,11 @@ router.post("/dashboard/profile/edit/:id", upload.single("profileImage"), functi
       email: email,
       profileImage: profileImage
     }
-  }).exec(function (err, results) {
-    // Save changes to database
-    save().then(function () {
-      req.flash('success', 'Anime Successfully Deleted!');
-      res.location("/users/dashboard");
-      res.redirect("/users/dashboard");
-    });
+  }, function (err) {
+    if (err) return next(err);
+    req.flash('success', 'Details Successfully Updated!');
+    res.location("/users/dashboard");
+    res.redirect("/users/dashboard");
   })
 })
 

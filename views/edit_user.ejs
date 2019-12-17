@@ -1,7 +1,8 @@
 <% include partials/header %>
 
 <div class="container">
-    <form method="post" action="/dashbord/profile/edit/<%= userInfo._id %>" enctype="multipart/form-data" class="p-5">
+    <form method="post" action="/users/dashboard/profile/edit/<%= userInfo._id %>" enctype="multipart/form-data"
+        class="p-5">
         <div class="form-group">
             <label for="name">Name</label>
             <input name="name" value="<%= userInfo.name %>" type="text" class="form-control"
