@@ -160,7 +160,11 @@ router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
 });
 
 /********************** User Profile CRUD functionality *********************/
-// Edit anime from database subdocuments
+// Registeration route
+router.get('/dashboard/profile/edit/:id', function (req, res, next) {
+  res.render('edit_user', { title: 'Edit Profile' });
+});
+// Edit user details
 router.post("/dashboard/profile/edit/:id", upload.single("profileImage"), function (req, res, next) {
   // Edit items
   var name = req.body.name;
