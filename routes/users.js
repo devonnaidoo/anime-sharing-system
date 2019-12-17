@@ -158,7 +158,36 @@ router.post('/register', upload.single("profileImage"), function (req, res, next
 router.get('/dashboard', ensureAuthenticated, function (req, res, next) {
   res.render('dashboard', { title: 'Dashboard', username: req.user.username, anime: req.user.anime });
 });
+
 /********************** User Profile CRUD functionality *********************/
+// Edit anime from database subdocuments
+router.post("/dashboard/profile/edit/:id", upload.single("profileImage"), function (req, res, next) {
+  // Edit items
+  var name = req.body.name;
+  var username = req.body.username;
+  var email = req.body.email;
+  if (req.file) {
+    var profileImage = req.file.path;
+  } else {
+    var profileImage = "./uploads/no-image.jpg";
+  }
+
+  User.findByIdAndUpdate(req.params.id, {
+    $set: {
+      name: name,
+      username: username,
+      email: email,
+      profileImage: profileImage
+    }
+  }).exec(function (err, results) {
+    // Save changes to database
+    save().then(function () {
+      req.flash('success', 'Anime Successfully Deleted!');
+      res.location("/users/dashboard");
+      res.redirect("/users/dashboard");
+    });
+  })
+})
 
 
 /********************** Anime CRUD functionality *********************/
